@@ -16,29 +16,66 @@ function Navbar() {
           QuickShop
         </Link>
 
+        <div className="relative flex-1 max-w-2xl mx-10">
+
+            <span className="absolute left-3 top-3 text-gray-400">
+                🔍
+            </span>
+
+            <input
+                type="text"
+                placeholder="Search mobiles, accessories..."
+                className="w-full border rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            </div>
+
         <div className="flex gap-6 items-center">
 
-          <Link to="/">Home</Link>
+          <Link
+            to="/"
+            className="hover:text-blue-600 transition font-medium"
+            >
+            Home
+            </Link>
 
-          <Link to="/products">
+          <button className="text-xl">
+            👤
+          </button>
+
+          <Link to="/products"
+          className="hover:text-blue-600 transition font-medium"
+          >
             Products
           </Link>
 
-          <Link to="/admin/products">
-            Admin
-          </Link>
-
           <Link
-            to="/cart"
-            className="relative"
-          >
-            🛒 Cart
+                to="/cart"
+                className="relative flex items-center gap-2"
+                >
+                🛒 Cart
 
-            <span className="ml-2 bg-red-600 text-white rounded-full px-2 text-sm">
-              {cartItems.length}
-            </span>
-
-          </Link>
+                <span
+                    className="
+                    absolute
+                    -top-2
+                    -right-3
+                    bg-red-600
+                    text-white
+                    rounded-full
+                    min-w-[20px]
+                    h-5
+                    px-1
+                    flex
+                    items-center
+                    justify-center
+                    text-xs
+                    font-bold
+                    "
+                    >
+                        {cartItems.length}
+                </span>
+            </Link>
 
         </div>
 

@@ -112,5 +112,4 @@ const decreaseQuantity = (id) => {
   );
 }
 
-// 👇 यह सबसे जरूरी है
 export const useCart = () => useContext(CartContext);
