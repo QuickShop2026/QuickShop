@@ -19,7 +19,7 @@ function AddProduct() {
 
   const saveProduct = async () => {
     try {
-      await axios.post(
+      await createProduct(
         "http://localhost:5000/api/products/add",
         form
       );

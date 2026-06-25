@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { createProduct } from "../services/productService";
 
 function AddProduct() {
   const [formData, setFormData] = useState({
@@ -233,7 +234,7 @@ const handleHighlightChange = (
                 const name = prompt("Enter Brand Name");
                 if (!name) return;
 
-                await axios.post(
+                await createProduct(
                   "http://localhost:5000/api/brands/add",
                   { name }
                 );
@@ -270,7 +271,7 @@ const handleHighlightChange = (
                 const name = prompt("Enter Category Name");
                 if (!name) return;
 
-                await axios.post(
+                await createProduct(
                   "http://localhost:5000/api/categories/add",
                   { name }
                 );

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { getProductById,editProduct,} from "../services/productService";
+import { getBrands,createBrand,} from "../services/brandService";
+import { getCategories,createCategory,} from "../services/categoryService";
 
 
 function EditProduct() {
@@ -36,7 +38,7 @@ function EditProduct() {
 }, []);
 
 const fetchProduct = async () => {
-  const res = await axios.get(
+  const res = await getProductById(
     `http://localhost:5000/api/products/${id}`
   );
 
@@ -44,12 +46,13 @@ const fetchProduct = async () => {
 };
 
 const fetchBrands = async () => {
-    const res = await axios.get("http://localhost:5000/api/brands");
+    const res = await getBrands();
     setBrands(res.data);
+    
   };
 
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:5000/api/categories");
+    const res = await getCategories();
     setCategories(res.data);
   };
   
@@ -166,7 +169,7 @@ const fetchBrands = async () => {
   e.preventDefault();
 
   try {
-    await axios.put(
+    await editProduct(
       `http://localhost:5000/api/products/${id}`,
       formData
     );
@@ -218,10 +221,7 @@ const fetchBrands = async () => {
                 const name = prompt("Enter Brand Name");
                 if (!name) return;
 
-                await axios.post(
-                  "http://localhost:5000/api/brands/add",
-                  { name }
-                );
+                await createBrand({ name });
 
                 fetchBrands();
               }}
@@ -255,10 +255,7 @@ const fetchBrands = async () => {
                 const name = prompt("Enter Category Name");
                 if (!name) return;
 
-                await axios.post(
-                  "http://localhost:5000/api/categories/add",
-                  { name }
-                );
+                await createCategory({ name });
 
                 fetchCategories();
               }}

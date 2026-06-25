@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
+import SearchBar from "../components/SearchBar";
+import CategoryFilter from "../components/CategoryFilter";
+import { getProducts } from "../services/productService";
 
 
 function UserProducts() {
@@ -28,17 +30,15 @@ const [selectedCategory, setSelectedCategory] =
   
   
 
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/api/products"
-      );
+ const fetchProducts = async () => {
+  try {
+    const res = await getProducts();
 
-      setProducts(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    setProducts(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
    const addToCart = (product) => {
   const cart =
@@ -73,44 +73,15 @@ const [selectedCategory, setSelectedCategory] =
 
     </div>
 
-      <input
-  type="text"
-  placeholder="Search Product..."
-  value={search}
-  onChange={(e) => setSearch(e.target.value)}
-  className="w-full border p-3 rounded mb-4"
-  
+      <SearchBar
+        search={search}
+        setSearch={setSearch}
+      />
+
+<CategoryFilter
+  selectedCategory={selectedCategory}
+  setSelectedCategory={setSelectedCategory}
 />
-
-<div className="flex gap-2 mb-5">
-
-  {[
-    "All",
-    "Mobiles",
-    "Accessories",
-    "Earbuds",
-    "Chargers",
-  ].map((category) => (
-
-    <button
-      key={category}
-      onClick={() =>
-        setSelectedCategory(category)
-      }
-      className={`px-4 py-2 rounded ${
-        selectedCategory === category
-          ? "bg-blue-600 text-white"
-          : "bg-gray-200"
-      }`}
-    >
-      {category}
-    </button>
-
-    
-
-  ))}
-
-</div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
 

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
+import CategoryFilter from "../components/CategoryFilter";
+import SearchBar from "../components/SearchBar";
+import { getProducts } from "../services/productService";
 
 
 function Products() {
@@ -20,34 +22,29 @@ const [selectedCategory, setSelectedCategory] =
   
 
   const fetchProducts = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/api/products"
-      );
+  try {
+    const res = await getProducts();
 
-      setProducts(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    setProducts(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  const deleteProduct = async (id) => {
-    const confirmDelete = window.confirm(
-      "Delete this product?"
-    );
+ const deleteProduct = async (id) => {
+  const confirmDelete = window.confirm(
+    "Delete this product?"
+  );
 
-    if (!confirmDelete) return;
+  if (!confirmDelete) return;
 
-    try {
-      await axios.delete(
-        `http://localhost:5000/api/products/${id}`
-      );
-
-      fetchProducts();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  try {
+    await removeProduct(id);
+    fetchProducts();
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-100 p-5">
@@ -57,49 +54,19 @@ const [selectedCategory, setSelectedCategory] =
         
       </h1>
 
-       <input
-  type="text"
-  placeholder="Search Product..."
-  value={search}
-  onChange={(e) => setSearch(e.target.value)}
-  className="w-full border p-3 rounded mb-4"
-
-  
-/>
-<div className="flex gap-2 mb-5">
-
-  {[
-    "All",
-    "Mobiles",
-    "Accessories",
-    "Earbuds",
-    "Chargers",
-  ].map((category) => (
-
-    <button
-      key={category}
-      onClick={() =>
-        setSelectedCategory(category)
-      }
-      className={`px-4 py-2 rounded ${
-        selectedCategory === category
-          ? "bg-blue-600 text-white"
-          : "bg-gray-200"
-      }`}
-    >
-      {category}
-    </button>
-
-    
-
-  ))}
-
-</div>
+       <SearchBar
+        search={search}
+        setSearch={setSearch}
+      />
+      <CategoryFilter
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
         {products
-  .filter((product) =>
+        .filter((product) =>
     product.name
       .toLowerCase()
       .includes(search.toLowerCase())

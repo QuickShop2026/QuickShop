@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import ImageGallery from "../components/ImageGallery";
+import { getProductById } from "../services/productService";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -17,9 +17,7 @@ function ProductDetails() {
 
   const fetchProduct = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/products/${id}`
-      );
+      const res = await getProductById(id);
 
       setProduct(res.data);
       setProduct(res.data);
@@ -58,7 +56,7 @@ function ProductDetails() {
         <div className="grid md:grid-cols-2 gap-8">
 
           {/* LEFT SIDE */}
-          
+
           <ImageGallery product={product} />
 
           {/* RIGHT SIDE */}
