@@ -4,32 +4,18 @@ import ProductCard from "../components/ProductCard";
 import SearchBar from "../components/SearchBar";
 import CategoryFilter from "../components/CategoryFilter";
 import { getProducts } from "../services/productService";
-
+import { useCart } from "../context/CartContext";
 
 function UserProducts() {
   const [products, setProducts] = useState([]);
 
   const [search, setSearch] = useState("");
-const [selectedCategory, setSelectedCategory] =
-  useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  
+  const { cartItems,addToCart,} = useCart();
 
-  
-
- const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    fetchProducts();
-     const cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
-    setCartCount(cart.length);
-}, []);
-  
-
-  
-  
-
+  useEffect(() => { fetchProducts();}, []);
+ 
  const fetchProducts = async () => {
   try {
     const res = await getProducts();
@@ -38,21 +24,7 @@ const [selectedCategory, setSelectedCategory] =
   } catch (error) {
     console.log(error);
   }
-};
-
-   const addToCart = (product) => {
-  const cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
-
-  cart.push(product);
-
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-  );
-
-  setCartCount(cart.length);
-};
+};   
 
   return( 
        
@@ -68,7 +40,7 @@ const [selectedCategory, setSelectedCategory] =
         to="/cart"
         className="bg-green-600 text-white px-4 py-2 rounded"
       >
-        Cart ({cartCount})
+        Cart ({cartItems.length})
       </Link>
 
     </div>

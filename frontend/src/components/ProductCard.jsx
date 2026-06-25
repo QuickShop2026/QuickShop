@@ -1,21 +1,20 @@
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
-function ProductCard({
-  product,
-  showAdminButtons = false,
-  showUserButtons = false,
-  onDelete,
-  onAddToCart,
-}) {
+function ProductCard({product,showAdminButtons = false,
+  showUserButtons = false,onDelete,onAddToCart,})
+{
+    const { cartItems } = useCart();
+    const isInCart = cartItems.some(
+  (item) => item._id === product._id
+);
   return (
     <div className="bg-white rounded-xl shadow p-4">
-
       <img
         src={product.image}
         alt={product.name}
         className="h-48 w-full object-cover rounded"
       />
-
       <h2 className="font-bold mt-3">
         {product.name}
       </h2>
@@ -27,13 +26,10 @@ function ProductCard({
       <p className="text-green-600 font-bold">
         ₹{product.salePrice || product.price}
       </p>
-
       <p>
         Stock : {product.stock}
       </p>
-
       <div className="flex gap-2 mt-3">
-
         {showAdminButtons && (
           <>
             <Link
@@ -51,7 +47,6 @@ function ProductCard({
             </button>
           </>
         )}
-
         {showUserButtons && (
           <>
             <Link
@@ -61,17 +56,24 @@ function ProductCard({
               Details
             </Link>
 
-            <button
-              onClick={() => onAddToCart(product)}
-              className="flex-1 bg-green-600 text-white py-2 rounded"
+            {isInCart ? (
+            <Link
+                to="/cart"
+                className="flex-1 bg-orange-500 text-white py-2 rounded text-center"
             >
-              Add To Cart
+                Go To Cart
+            </Link>
+            ) : (
+            <button
+                onClick={() => onAddToCart(product)}
+                className="flex-1 bg-green-600 text-white py-2 rounded"
+            >
+                Add To Cart
             </button>
+            )}
           </>
         )}
-
       </div>
-
     </div>
   );
 }
