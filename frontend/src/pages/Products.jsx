@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
 
 
 function Products() {
@@ -109,57 +110,13 @@ const [selectedCategory, setSelectedCategory] =
       : product.category ===
         selectedCategory
   )
-  .map((product) => (
-
-          <div
+          .map((product) => (
+          <ProductCard
             key={product._id}
-            className="bg-white rounded-xl shadow p-4"
-          >
-
-            <img
-              src={product.image}
-              alt={product.name}
-              className="h-48 w-full object-cover rounded"
-            />
-
-            <h2 className="font-bold mt-3">
-              {product.name}
-            </h2>
-
-            <p className="text-gray-500">
-              {product.brand}
-            </p>
-
-            <p className="text-green-600 font-bold">
-              ₹{product.price}
-            </p>
-
-            <p>
-              Stock: {product.stock}
-            </p>
-
-            <div className="flex gap-2 mt-3">
-
-              <Link
-                to={`/admin/edit-product/${product._id}`}
-                className="flex-1 bg-yellow-500 text-white py-2 rounded text-center"
-                >
-                Edit
-                </Link>
-
-              <button
-                onClick={() =>
-                  deleteProduct(product._id)
-                }
-                className="flex-1 bg-red-600 text-white py-2 rounded"
-              >
-                Delete
-              </button>
-
-            </div>
-
-          </div>
-
+            product={product}
+            showAdminButtons={true}
+            onDelete={deleteProduct}
+          />
         ))}
 
       </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ImageGallery from "../components/ImageGallery";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -57,59 +58,8 @@ function ProductDetails() {
         <div className="grid md:grid-cols-2 gap-8">
 
           {/* LEFT SIDE */}
-
-          <div>
-
-            {/* Main Preview Image */}
-
-            <div className="w-full h-[550px] overflow-hidden rounded-xl border bg-white flex items-center justify-center">
-
-              <img
-                src={selectedImage}
-                alt={product.name}
-                className="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-125 cursor-zoom-in"
-              />
-
-            </div>
-
-            {/* Thumbnails */}
-
-            <div className="flex gap-3 mt-4 flex-wrap">
-
-              {/* Main Image Thumbnail */}
-
-              <img
-                src={product.image}
-                alt={product.name}
-                onMouseEnter={() => setSelectedImage(product.image)}
-                onClick={() => setSelectedImage(product.image)}
-                className={`w-24 h-24 object-cover rounded border cursor-pointer transition-all duration-200 hover:scale-105 ${
-                  selectedImage === product.image
-                    ? "border-blue-600 border-4"
-                    : "border-gray-300"
-                }`}
-              />
-
-              {/* Supporting Images */}
-
-              {product.images?.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`Image ${index + 1}`}
-                  onMouseEnter={() => setSelectedImage(img)}
-                  onClick={() => setSelectedImage(img)}
-                  className={`w-24 h-24 object-cover rounded border cursor-pointer transition-all duration-200 hover:scale-105 ${
-                    selectedImage === img
-                      ? "border-blue-600 border-4"
-                      : "border-gray-300"
-                  }`}
-                />
-              ))}
-
-            </div>
-
-          </div>
+          
+          <ImageGallery product={product} />
 
           {/* RIGHT SIDE */}
 
