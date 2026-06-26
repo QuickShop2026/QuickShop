@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const brandRoutes = require("./routes/brandRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 require("dotenv").config({
   path: "./atlas-credentials.env",
@@ -11,6 +12,9 @@ require("dotenv").config({
 const productRoutes = require("./routes/productRoutes");
 
 const app = express();
+
+console.log("userRoutes =", userRoutes);
+console.log("typeof userRoutes =", typeof userRoutes);
 
 app.use(cors());
 app.use(express.json());
@@ -34,13 +38,12 @@ app.get("/", (req, res) => {
 });
 
 // Server
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, "0.0.0.0", () => {
-  console.log("Server running");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 app.use("/api/brands", brandRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/users", userRoutes); 

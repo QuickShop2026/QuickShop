@@ -22,6 +22,7 @@ function App() {
         <Route path="/admin/edit-product/:id" element={<EditProduct />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        app.use("/api/users", userRoutes);
       </Routes>
     </>
   );
