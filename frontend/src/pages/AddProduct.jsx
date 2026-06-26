@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { createProduct } from "../services/productService";
+import { getBrands,createBrand,} from "../services/brandService";
+import { getCategories,createCategory,} from "../services/categoryService";
+
 
 function AddProduct() {
   const [formData, setFormData] = useState({
@@ -36,12 +39,12 @@ function AddProduct() {
   }, []);
 
   const fetchBrands = async () => {
-    const res = await axios.get("http://localhost:5000/api/brands");
-    setBrands(res.data);
+    const res = await getBrands();
+setBrands(res.data);
   };
 
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:5000/api/categories");
+    const res = await getCategories();
     setCategories(res.data);
   };
 
@@ -159,7 +162,7 @@ const handleHighlightChange = (
   e.preventDefault();
 
   try {
-    await axios.post(
+    await createProduct(
       "http://localhost:5000/api/products/add",
       formData
     );

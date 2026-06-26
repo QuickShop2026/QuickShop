@@ -11,6 +11,11 @@ export function CartProvider({ children }) {
     setCartItems(cart);
   }, []);
 
+  const clearCart = () => {
+  setCartItems([]);
+  localStorage.removeItem("cart");
+};
+
  const addToCart = (product) => {
   const existingProduct = cartItems.find(
     (item) => item._id === product._id
@@ -105,7 +110,8 @@ const decreaseQuantity = (id) => {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
-        }}      
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>

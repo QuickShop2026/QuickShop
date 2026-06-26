@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const brandRoutes = require("./routes/brandRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const userRoutes = require("./routes/userRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 require("dotenv").config({
   path: "./atlas-credentials.env",
@@ -47,3 +48,6 @@ app.listen(PORT, () => {
 app.use("/api/brands", brandRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/users", userRoutes); 
+console.log("orderRoutes =", orderRoutes);
+console.log("typeof orderRoutes =", typeof orderRoutes);
+app.use("/api/orders", orderRoutes);

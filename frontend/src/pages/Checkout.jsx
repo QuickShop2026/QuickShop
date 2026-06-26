@@ -1,9 +1,16 @@
 import { useState } from "react";
 import CartSummary from "../components/CartSummary";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { placeOrder } from "../services/orderService";
 
 function Checkout() {
   const { user } = useAuth();
+
+  const navigate = useNavigate();
+
+  const { cartItems, clearCart } = useCart();
 
   const [address, setAddress] = useState({
     fullName: user?.name || "",
@@ -22,34 +29,74 @@ function Checkout() {
     });
   };
 
-  const handleCheckout = () => {
-    const {
-      fullName,
-      mobile,
-      email,
-      address: fullAddress,
-      city,
-      state,
-      pincode,
-    } = address;
+  const handleCheckout = async () => {
+    if (!user) {
+  alert("Please login first");
+  navigate("/login");
+  return;
+}
 
-    if (
-      !fullName ||
-      !mobile ||
-      !email ||
-      !fullAddress ||
-      !city ||
-      !state ||
-      !pincode
-    ) {
-      alert("Please fill all fields");
-      return;
-    }
+  const {
+    fullName,
+    mobile,
+    email,
+    address: fullAddress,
+    city,
+    state,
+    pincode,
+  } = address;
 
-    console.log(address);
+  if (
+    !fullName ||
+    !mobile ||
+    !email ||
+    !fullAddress ||
+    !city ||
+    !state ||
+    !pincode
+  ) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    alert("Address Saved Successfully");
-  };
+  try {
+    const orderData = {
+      user: user._id,
+
+      items: cartItems.map((item) => ({
+        product: item._id,
+        name: item.name,
+        image: item.image,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+
+      shippingAddress: address,
+
+      totalAmount: cartItems.reduce(
+        (total, item) =>
+          total + item.price * item.quantity,
+        0
+      ),
+
+      paymentMethod: "COD",
+    };
+
+    await placeOrder(orderData);
+
+    clearCart();
+
+    alert("Order Placed Successfully");
+
+    navigate("/");
+
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Order Failed"
+    );
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-100 p-5">
