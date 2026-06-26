@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const { cartItems } = useCart();
+  const { isLoggedIn, user, logout } = useAuth();
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -73,9 +75,18 @@ function Navbar() {
                 </span>
             </Link>
 
-            <button className="text-xl">
-            👤
-          </button>
+            {isLoggedIn ? (
+            <button
+              onClick={logout}
+              className="font-medium text-red-600"
+            >
+              Logout ({user.name})
+            </button>
+          ) : (
+            <Link to="/login">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>

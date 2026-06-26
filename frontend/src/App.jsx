@@ -8,6 +8,9 @@ import EditProduct from "./pages/EditProduct";
 import UserProducts from "./pages/UserProducts";
 import Cart from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -15,6 +18,11 @@ function App() {
       <Navbar />
 
       <Routes>
+        <Route path="/login" element={<Login />}/>
+        <Route path="/register" element={<Register />}/>
+        <Route path="/checkout" element={<Checkout />}/>
+        
+
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<UserProducts />} />
         <Route path="/admin/add-product" element={<AddProduct />} />
@@ -22,7 +30,7 @@ function App() {
         <Route path="/admin/edit-product/:id" element={<EditProduct />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-        app.use("/api/users", userRoutes);
+        
       </Routes>
     </>
   );
