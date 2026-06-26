@@ -13,7 +13,7 @@ function Navbar() {
           to="/"
           className="text-2xl font-bold text-blue-600"
         >
-          QuickShop
+          🛍️ QuickShop
         </Link>
 
         <div className="relative flex-1 max-w-2xl mx-10">
@@ -38,10 +38,6 @@ function Navbar() {
             >
             Home
             </Link>
-
-          <button className="text-xl">
-            👤
-          </button>
 
           <Link to="/products"
           className="hover:text-blue-600 transition font-medium"
@@ -77,10 +73,11 @@ function Navbar() {
                 </span>
             </Link>
 
+            <button className="text-xl">
+            👤
+          </button>
         </div>
-
       </div>
-
     </nav>
   );
 }

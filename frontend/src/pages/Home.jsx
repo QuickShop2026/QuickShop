@@ -1,18 +1,20 @@
-import { Link } from "react-router-dom";
+import HeroSection from "../components/HeroSection";
+import CategorySection from "../components/CategorySection";
+import FeaturedProducts from "../components/FeaturedProducts";
+import LatestProducts from "../components/LatestProducts";
 
 function Home() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">
-        Choice Mobiles
-      </h1>
+    <div className="bg-gray-100 min-h-screen">
 
-      <Link
-        to="/admin/add-product"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Add Product
-      </Link>
+      <HeroSection />
+
+      <CategorySection />
+
+      <FeaturedProducts />
+
+      <LatestProducts />
+
     </div>
   );
 }
