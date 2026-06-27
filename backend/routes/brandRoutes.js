@@ -1,50 +1,29 @@
 const express = require("express");
+
 const router = express.Router();
 
-const Brand = require("../models/Brand");
+const {
 
-console.log(require.resolve("../models/Brand"));
-console.log(Brand);
+createBrand,
 
+getBrands,
 
-// Add Brand
-router.post("/add", async (req, res) => {
-  try {
-    const brand = await Brand.create(req.body);
-    res.status(201).json(brand);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-});
+getBrand,
 
-router.get("/seed", async (req, res) => {
-  await Brand.insertMany([
-    { name: "Samsung" },
-    { name: "Vivo" },
-    { name: "Oppo" },
-    { name: "Realme" },
-    { name: "OnePlus" },
-    { name: "Apple" }
-  ]);
+updateBrand,
 
-  res.send("Brands Added");
-});
+deleteBrand,
 
-// Get All Brands
-router.get("/", async (req, res) => {
-  try {
-    const brands = await Brand.find().sort({
-      name: 1,
-    });
+} = require("../controllers/brandController");
 
-    res.json(brands);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-});
+router.post("/", createBrand);
+
+router.get("/", getBrands);
+
+router.get("/:id", getBrand);
+
+router.put("/:id", updateBrand);
+
+router.delete("/:id", deleteBrand);
 
 module.exports = router;

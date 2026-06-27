@@ -8,6 +8,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
 const counterRoutes = require("./routes/counterRoutes");
+const supplierRoutes = require("./routes/supplierRoutes");
 
 
 
@@ -53,6 +54,8 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/counters", counterRoutes);
+app.use("/api/suppliers", supplierRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -1,84 +1,149 @@
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
+const specificationSchema = new mongoose.Schema(
+{
+    title:{
+        type:String,
+        trim:true
     },
 
-    brand: {
-      type: String,
-      default: "",
+    value:{
+        type:String,
+        trim:true
+    }
+
+},
+{
+    _id:false
+});
+
+const productSchema = new mongoose.Schema({
+
+    productCode:{
+        type:String,
+        unique:true,
+        trim:true
     },
 
-    price: {
-      type: Number,
-      required: true,
+    name:{
+        type:String,
+        required:true,
+        trim:true
     },
 
-    salePrice: {
-      type: Number,
-      default: 0,
+    slug:{
+        type:String,
+        unique:true,
+        trim:true
     },
 
-    category: {
-      type: String,
-      required: true,
+    brand:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Brand",
+        required:true
     },
 
-    image: {
-      type: String,
-      default: "",
+    category:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Category",
+        required:true
     },
 
-    images: [
-      {
-        type: String,
-      },
-    ],
-
-    stock: {
-      type: Number,
-      default: 0,
+    unit:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Unit",
+        required:true
     },
 
-    description: {
-      type: String,
-      default: "",
+    hsn:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"HSN",
+        required:true
     },
 
-    specifications: [
-      {
-        key: String,
-        value: String,
-      },
-    ],
-
-    highlights: [
-      {
-        title: String,
-        value: String,
-      },
-    ],
-
-    isFeatured: {
-      type: Boolean,
-      default: false,
+    trackingType:{
+        type:String,
+        enum:["IMEI","SERIAL","NONE"],
+        default:"NONE"
     },
 
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+    shortDescription:String,
 
-module.exports = mongoose.model(
-  "Product",
-  productSchema
-);
+    description:String,
+
+    mrp:{
+        type:Number,
+        default:0
+    },
+
+    sellingPrice:{
+        type:Number,
+        default:0
+    },
+
+    offerPrice:{
+        type:Number,
+        default:0
+    },
+
+    mainImage:{
+        type:String,
+        default:""
+    },
+
+    gallery:{
+        type:[String],
+        default:[]
+    },
+
+    highlights:{
+        type:[String],
+        default:[]
+    },
+
+    specifications:{
+        type:[specificationSchema],
+        default:[]
+    },
+
+    boxContents:{
+        type:[String],
+        default:[]
+    },
+
+    barcode:String,
+
+    tags:{
+        type:[String],
+        default:[]
+    },
+
+    minimumStock:{
+        type:Number,
+        default:0
+    },
+
+    currentStock:{
+        type:Number,
+        default:0
+    },
+
+    status:{
+        type:String,
+        enum:["Active","Inactive"],
+        default:"Active"
+    },
+
+    notes:String,
+
+    isDeleted:{
+        type:Boolean,
+        default:false
+    }
+
+},
+{
+    timestamps:true
+});
+
+module.exports=mongoose.model("Product",productSchema);

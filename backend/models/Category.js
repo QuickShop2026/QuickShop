@@ -1,15 +1,29 @@
 const mongoose = require("mongoose");
 
-const Category = require("../models/Category");
-
-
 const categorySchema = new mongoose.Schema(
   {
+    categoryCode: {
+      type: String,
+      unique: true,
+      trim: true,
+    },
+
     name: {
       type: String,
       required: true,
+      trim: true,
+    },
+
+    slug: {
+      type: String,
       unique: true,
       trim: true,
+    },
+
+    parentCategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      default: null,
     },
 
     image: {
@@ -17,9 +31,40 @@ const categorySchema = new mongoose.Schema(
       default: "",
     },
 
-    isActive: {
+    banner: {
+      type: String,
+      default: "",
+    },
+
+    description: {
+      type: String,
+      default: "",
+    },
+
+    displayOrder: {
+      type: Number,
+      default: 0,
+    },
+
+    isFeatured: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+
+    status: {
+      type: String,
+      enum: ["Active", "Inactive"],
+      default: "Active",
+    },
+
+    notes: {
+      type: String,
+      default: "",
+    },
+
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -27,7 +72,4 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model(
-  "Category",
-  categorySchema
-);
+module.exports = mongoose.model("Category", categorySchema);
