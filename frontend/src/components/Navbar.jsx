@@ -48,6 +48,20 @@ function Navbar() {
           </Link>
 
           <Link
+            to="/my-orders"
+            className="hover:text-blue-600 transition font-medium"
+          >
+            My Orders
+          </Link>
+
+          <Link
+            to="/admin/dashboard"
+            className="font-medium hover:text-blue-600"
+          >
+            Admin
+          </Link>
+
+          <Link
                 to="/cart"
                 className="relative flex items-center gap-2"
                 >

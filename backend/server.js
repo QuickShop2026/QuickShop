@@ -5,6 +5,7 @@ const brandRoutes = require("./routes/brandRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const userRoutes = require("./routes/userRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 require("dotenv").config({
   path: "./atlas-credentials.env",
@@ -41,13 +42,13 @@ app.get("/", (req, res) => {
 // Server
 const PORT = process.env.PORT || 5000;
 
+app.use("/api/brands", brandRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/users", userRoutes); 
+app.use("/api/orders", orderRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-app.use("/api/brands", brandRoutes);
-app.use("/api/categories", categoryRoutes);
-app.use("/api/users", userRoutes); 
-console.log("orderRoutes =", orderRoutes);
-console.log("typeof orderRoutes =", typeof orderRoutes);
-app.use("/api/orders", orderRoutes);
